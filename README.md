@@ -1,4 +1,7 @@
-# hinge-cli
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/banner-dark.svg">
+  <img alt="hinge-cli" src=".github/assets/banner-light.svg" width="600">
+</picture>
 
 An unofficial, read-only command-line client for your own Hinge account — the only one that tells
 you upfront this almost certainly violates Hinge's Terms of Service, and commits to never
@@ -16,6 +19,8 @@ non-goals (no bots, no bulk actions, no multi-account) live in [intent.md](inten
 | --- | --- |
 | Owner | Andrea Collet |
 | Support | GitHub issues on this repository (single-maintainer project — see CONTRIBUTING.md) |
+
+![hinge-cli --help, then hinge tier failing with a plain "not signed in" message, then hinge auth import saving a captured session](.github/assets/demo.gif)
 
 ## Features
 
@@ -63,7 +68,7 @@ hinge limits
 | --- | --- | --- |
 | `HINGE_SESSION_FILE` | none | Path to a session file to use instead of the password-manager-backed store |
 | `HINGE_SESSION_REF` | none | Reference to a password-manager entry holding the session |
-| `HINGE_APPIUM_URL` | `http://localhost:4723` | Appium server used only by the session-capture tooling, not at CLI runtime |
+| `HINGE_APPIUM_URL` | `http://127.0.0.1:4723` | Appium server used only by `hinge inspect` (exploration), not by `tier`/`limits`/`auth` |
 | `HINGE_UDID` | none | Device UDID for session capture |
 | `HINGE_BUNDLE_ID` | `co.hinge.mobile.ios` | Hinge app bundle id for session capture |
 | `HINGE_TEAM_ID` | none | Apple team id for session capture |
