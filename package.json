@@ -1,6 +1,6 @@
 {
   "name": "hinge-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Command-line client for your own Hinge account, driven through Appium and WebDriverAgent.",
   "type": "module",
   "license": "MIT",

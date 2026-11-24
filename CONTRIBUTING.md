@@ -17,6 +17,11 @@ Enable the template once: `git config commit.template .gitmessage.txt`.
 - `scripts/verify` green; tests added or updated for changed behaviour.
 - Docs, ADR or changelog updated when behaviour, contracts or architecture change.
 - Dependency changes reviewed explicitly (new packages, version bumps, lockfile diff).
+- **Every PR bumps `package.json`'s version per [SemVer 2.0.0](https://semver.org/):** patch for
+  fixes/docs/internal changes, minor for backward-compatible additions, major for breaking changes.
+  Use `npm version <major|minor|patch> --no-git-tag-version` (never hand-edit the version field —
+  see AGENTS.md) and add a matching entry to `CHANGELOG.md`. Git tags are still created only at
+  actual npm publish time (`docs/deployment.md`'s Release steps), not on every PR.
 
 ## Review roles
 - Reviewer: @ifthenelse approves all changes; CODEOWNERS requires their review on every path, and on
