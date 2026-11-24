@@ -1,0 +1,29 @@
+{
+  "name": "hinge-cli",
+  "version": "0.1.0",
+  "description": "Command-line client for your own Hinge account, driven through Appium and WebDriverAgent.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "hinge": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test \"test/*.test.ts\""
+  },
+  "dependencies": {
+    "commander": "^15.1.0",
+    "webdriver": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2"
+  }
+}

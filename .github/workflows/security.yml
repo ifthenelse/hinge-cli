@@ -1,0 +1,48 @@
+# Static security checks. This project talks to live third-party services (Hinge's own API) and
+# handles auth-session material, so it does NOT run active network/penetration testing against any
+# external target in CI — that would be unauthorized security testing against systems this project
+# doesn't own. Instead: dependency vulnerability scanning, static analysis (CodeQL) and secret scanning,
+# which catch real risk classes for a CLI that reads tokens from disk/env (leaked secrets, vulnerable deps,
+# unsafe code patterns) without touching anyone else's infrastructure.
+name: Security
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1" # weekly, catches newly-disclosed CVEs in unchanged dependencies
+permissions:
+  contents: read
+jobs:
+  dependency-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - run: npm audit --audit-level=high
+
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  codeql:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+      - uses: github/codeql-action/analyze@v3
