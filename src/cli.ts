@@ -6,7 +6,7 @@ import { call, describeTier } from "./api.ts";
 import { clearSession, loadSession, parseSession, saveSession, sessionPath } from "./session-store.ts";
 import { readFile, rm } from "node:fs/promises";
 
-const program = new Command("hinge").description("CLI for your own Hinge account (Appium + WebDriverAgent)").option("--json", "machine-readable output");
+const program = new Command("hinge").description("CLI for your own Hinge account, via its reverse-engineered HTTP API").option("--json", "machine-readable output");
 const out = (data: unknown, text: string) => console.log(program.opts().json ? JSON.stringify(data) : text);
 
 async function withDevice<T>(fn: (d: Awaited<ReturnType<typeof connect>>) => Promise<T>): Promise<T> {

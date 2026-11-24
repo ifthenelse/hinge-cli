@@ -63,7 +63,7 @@ hinge limits
 | --- | --- | --- |
 | `HINGE_SESSION_FILE` | none | Path to a session file to use instead of the password-manager-backed store |
 | `HINGE_SESSION_REF` | none | Reference to a password-manager entry holding the session |
-| `HINGE_APPIUM_URL` | `http://localhost:4723` | Appium server used only by the session-capture tooling, not at CLI runtime |
+| `HINGE_APPIUM_URL` | `http://127.0.0.1:4723` | Appium server used only by `hinge inspect` (exploration), not by `tier`/`limits`/`auth` |
 | `HINGE_UDID` | none | Device UDID for session capture |
 | `HINGE_BUNDLE_ID` | `co.hinge.mobile.ios` | Hinge app bundle id for session capture |
 | `HINGE_TEAM_ID` | none | Apple team id for session capture |
