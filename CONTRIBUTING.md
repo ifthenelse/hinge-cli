@@ -23,6 +23,12 @@ Enable the template once: `git config commit.template .gitmessage.txt`.
   see AGENTS.md) and add a matching entry to `CHANGELOG.md`. Git tags are still created only at
   actual npm publish time (`docs/deployment.md`'s Release steps), not on every PR.
 
+## README demo GIF
+`.github/assets/demo.gif` is recorded, not hand-made. After a change to the CLI's output or
+command list, re-record it with [VHS](https://github.com/charmbracelet/vhs): `npm run build && vhs
+.github/assets/demo.tape` (run from the repo root; the tape builds a throwaway `hinge` shim and a
+fake `$HOME`, so it never touches a real session or calls the live Hinge API).
+
 ## Review roles
 - Reviewer: @ifthenelse approves all changes; CODEOWNERS requires their review on every path, and on
   `.github/` and `docs/security/` specifically.
