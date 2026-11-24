@@ -1,7 +1,7 @@
 {
   "name": "hinge-cli",
-  "version": "0.1.1",
-  "description": "Command-line client for your own Hinge account, driven through Appium and WebDriverAgent.",
+  "version": "0.1.2",
+  "description": "Command-line client for your own Hinge account, built on its reverse-engineered HTTP API.",
   "type": "module",
   "license": "MIT",
   "bin": {

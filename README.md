@@ -1,4 +1,7 @@
-# hinge-cli
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/banner-dark.svg">
+  <img alt="hinge-cli" src=".github/assets/banner-light.svg" width="600">
+</picture>
 
 An unofficial, read-only command-line client for your own Hinge account — the only one that tells
 you upfront this almost certainly violates Hinge's Terms of Service, and commits to never
@@ -16,6 +19,8 @@ non-goals (no bots, no bulk actions, no multi-account) live in [intent.md](inten
 | --- | --- |
 | Owner | Andrea Collet |
 | Support | GitHub issues on this repository (single-maintainer project — see CONTRIBUTING.md) |
+
+![hinge-cli --help, then hinge tier failing with a plain "not signed in" message, then hinge auth import saving a captured session](.github/assets/demo.gif)
 
 ## Features
 
