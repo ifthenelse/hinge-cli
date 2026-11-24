@@ -17,10 +17,19 @@ Enable the template once: `git config commit.template .gitmessage.txt`.
 - `scripts/verify` green; tests added or updated for changed behaviour.
 - Docs, ADR or changelog updated when behaviour, contracts or architecture change.
 - Dependency changes reviewed explicitly (new packages, version bumps, lockfile diff).
+- **Every PR bumps `package.json`'s version per [SemVer 2.0.0](https://semver.org/):** patch for
+  fixes/docs/internal changes, minor for backward-compatible additions, major for breaking changes.
+  Use `npm version <major|minor|patch> --no-git-tag-version` (never hand-edit the version field —
+  see AGENTS.md) and add a matching entry to `CHANGELOG.md`. Git tags are still created only at
+  actual npm publish time (`docs/deployment.md`'s Release steps), not on every PR.
 
 ## Review roles
-- Reviewer: TODO (who reviews, and who may approve changes to sensitive paths — see CODEOWNERS where supported).
-- Single-maintainer repository: document how self-review is done (checklist in the PR template, cooling-off before merge).
+- Reviewer: @ifthenelse approves all changes; CODEOWNERS requires their review on every path, and on
+  `.github/` and `docs/security/` specifically.
+- Single-maintainer repository: self-review follows the PR requirements above (verify green, tests
+  updated, docs/ADR updated) plus a 24h cooling-off before merging anything touching `src/secrets.ts`,
+  `src/session-store.ts`, `src/api.ts`, or `.github/workflows/`.
 
 ## Escalation
-TODO: whom to contact for blocked reviews, security concerns or production incidents.
+Security concerns: see [SECURITY.md](SECURITY.md). Blocked reviews or anything else: open a GitHub
+issue — there is no other channel for this single-maintainer project.
