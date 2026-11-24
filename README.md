@@ -1,15 +1,21 @@
 # hinge-cli
 
-> TODO: one paragraph — what this is and who it is for. Business intent lives in [intent.md](intent.md).
+An unofficial, read-only command-line client for your own Hinge account. It talks directly to
+Hinge's real HTTP API (reverse-engineered, not UI automation) using a session you capture from your
+own phone, and reports things the app shows but doesn't let you script: your subscription tier,
+like/rose limits. For members who want to check or audit their own account from a terminal or a
+script, on Windows, macOS or Linux. Business intent lives in [intent.md](intent.md).
 
 | | |
 | --- | --- |
 | Owner | Andrea Collet |
-| Support | TODO: team channel / contact |
+| Support | GitHub issues on this repository (single-maintainer project — see CONTRIBUTING.md) |
 
 ## Architecture
 
-TODO: short summary. Details: [docs/architecture.md](docs/architecture.md); decisions: [docs/adr/](docs/adr/).
+A single local binary (`hinge`) calls `prod-api.hingeaws.net` directly with a member-supplied
+session; there is no server component. Full summary: [docs/architecture.md](docs/architecture.md);
+decisions: [docs/adr/](docs/adr/).
 
 ## Prerequisites
 
@@ -23,13 +29,16 @@ TODO: short summary. Details: [docs/architecture.md](docs/architecture.md); deci
 ## Commands
 
 - Verify everything: `scripts/verify`
+- Build: `npm run build` · Import a captured session: `hinge auth import <file>` · Check it:
+  `hinge auth status` · Read your account: `hinge tier`, `hinge limits`. Capturing a session in the
+  first place is a manual, documented process: [docs/auth.md](docs/auth.md).
 
 ## Environment model
 
 | Environment | Purpose | Notes |
 | --- | --- | --- |
-| local | development | configured through `.env` (see `.env.example`) |
-| TODO | TODO | TODO |
+| local | development, and the only environment this tool runs in | configured through `.env` (see `.env.example`); no `.env` is required to build/test, only to import/use a real session |
+| npm registry | distribution | versioned release, see docs/deployment.md — no staging/production split, this is a local CLI |
 
 ## Deployment and recovery
 
