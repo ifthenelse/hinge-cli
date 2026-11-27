@@ -17,5 +17,8 @@ DerivedData/
 xcuserdata/
 # AI tooling (history is kept in ~/.claude and ~/.codex, not in the repo)
 .specstory/
-.claude/settings.local.json
-.claude/worktrees/
+
+# Local agent tooling and launch artifacts
+.claude/
+.codex/
+launches/
