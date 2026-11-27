@@ -5,6 +5,11 @@ rather than editing several version sources by hand. Format: [Keep a Changelog](
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-11-27
+### Changed
+- `.gitignore` now ignores `.claude/`, `.codex/` and `launches/` (local agent tooling and launch-pipeline
+  artifacts), replacing the narrower `.claude/` entries.
+
 ## [0.1.3] - 2026-11-25
 ### Added
 - Project logo (`.github/assets/hinge-cli-symbol-{black,white}.svg`) and a light/dark README banner
