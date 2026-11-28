@@ -91,6 +91,12 @@ decisions: [docs/adr/](docs/adr/).
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). Agents: [AGENTS.md](AGENTS.md).
 
+## Trademarks and affiliation
+
+Hinge is a trademark of Hinge, Inc. This project is independent: it is not affiliated with, endorsed
+by, or sponsored by Hinge, Inc. or Match Group, and claims no rights in their marks. "Hinge" appears
+in the name only to say which service the tool works with.
+
 ## License
 
 [MIT](LICENSE)
