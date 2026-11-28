@@ -98,7 +98,7 @@ B2C, single-actor product — skipped per skill guidance (no multi-stakeholder b
 
 ## Goals
 **Business goal:** none revenue-related — goal is working software, honest positioning, and (per user) a Product Hunt launch for visibility among developers.
-**Conversion action:** `git clone`/`npm install` + first successful `hinge tier` call.
+**Conversion action:** `git clone`/`cargo build --release` + first successful `hinge tier` call.
 **Current metrics:** 0 installs, 0 GitHub stars tracked at time of writing (repo just made public).
 
 ## Paid Ads

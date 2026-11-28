@@ -17,3 +17,8 @@ Hinge's terms may forbid this; automation can get an account flagged. Use your o
 
 ## Not done yet
 Phone-number + SMS login inside the CLI (needs the login traffic captured).
+
+## Note: user agent
+`hinge auth import` keeps only an allow-list of headers and no longer stores `user-agent`: every request
+the CLI sends identifies as a generic Android phone instead (`src/api.rs`). Sessions imported by an
+older version still work; their stored `user-agent` is ignored.

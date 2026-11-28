@@ -9,7 +9,7 @@ import json
 import os
 
 KEEP = {
-    "authorization", "user_id", "user-agent", "accept-language", "x-app-identifier", "x-app-version",
+    "authorization", "user_id", "accept-language", "x-app-identifier", "x-app-version",
     "x-build-number", "x-device-id", "x-device-model", "x-device-model-code", "x-device-platform",
     "x-device-region", "x-install-id", "x-os-version", "x-session-id",
 }

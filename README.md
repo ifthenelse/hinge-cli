@@ -35,13 +35,13 @@ non-goals (no bots, no bulk actions, no multi-account) live in [intent.md](inten
 
 ## Quickstart
 
-Requires Node.js >=22.18.
+Requires a Rust toolchain (1.85 or newer; install from [rustup.rs](https://rustup.rs)).
 
 ```sh
 git clone https://github.com/ifthenelse/hinge-cli.git
 cd hinge-cli
-npm install
-npm run build
+cargo build --release   # binary: target/release/hinge
+cargo install --path .  # optional: puts `hinge` on your PATH
 ```
 
 Then capture a session from your own device ([docs/auth.md](docs/auth.md)), import it, and check
@@ -56,8 +56,8 @@ hinge limits
 
 ## Usage
 
-- Verify everything (typecheck + tests): `scripts/verify`
-- Build: `npm run build`
+- Verify everything (fmt, clippy, tests): `scripts/verify`
+- Build: `cargo build --release`
 - Import a captured session: `hinge auth import <file>`
 - Check the stored session: `hinge auth status`
 - Read your account: `hinge tier`, `hinge limits`
@@ -78,9 +78,10 @@ to import/use a real session.
 
 ## Architecture
 
-A single local binary (`hinge`) calls `prod-api.hingeaws.net` directly with a member-supplied
+A single local Rust binary (`hinge`) calls `prod-api.hingeaws.net` directly with a member-supplied
 session; there is no server component. Full summary: [docs/architecture.md](docs/architecture.md);
-decisions: [docs/adr/](docs/adr/).
+decisions: [docs/adr/](docs/adr/). Every request goes out with the user agent of a generic Android phone
+(see [Request identity](docs/architecture.md#request-identity)).
 
 ## Deployment and recovery
 

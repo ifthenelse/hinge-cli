@@ -17,15 +17,15 @@ Enable the template once: `git config commit.template .gitmessage.txt`.
 - `scripts/verify` green; tests added or updated for changed behaviour.
 - Docs, ADR or changelog updated when behaviour, contracts or architecture change.
 - Dependency changes reviewed explicitly (new packages, version bumps, lockfile diff).
-- **Every PR bumps `package.json`'s version per [SemVer 2.0.0](https://semver.org/):** patch for
+- **Every PR bumps `Cargo.toml`'s version per [SemVer 2.0.0](https://semver.org/):** patch for
   fixes/docs/internal changes, minor for backward-compatible additions, major for breaking changes.
-  Use `npm version <major|minor|patch> --no-git-tag-version` (never hand-edit the version field —
-  see AGENTS.md) and add a matching entry to `CHANGELOG.md`. Git tags are still created only at
-  actual npm publish time (`docs/deployment.md`'s Release steps), not on every PR.
+  Edit the `version` line in `Cargo.toml` (the single version source) and run `cargo build` so
+  `Cargo.lock` follows; add a matching entry to `CHANGELOG.md`. Git tags are still created only at
+  actual release time (`docs/deployment.md`'s Release steps), not on every PR.
 
 ## README demo GIF
 `.github/assets/demo.gif` is recorded, not hand-made. After a change to the CLI's output or
-command list, re-record it with [VHS](https://github.com/charmbracelet/vhs): `npm run build && vhs
+command list, re-record it with [VHS](https://github.com/charmbracelet/vhs): `cargo build --release && vhs
 .github/assets/demo.tape` (run from the repo root; the tape builds a throwaway `hinge` shim and a
 fake `$HOME`, so it never touches a real session or calls the live Hinge API).
 
@@ -33,8 +33,8 @@ fake `$HOME`, so it never touches a real session or calls the live Hinge API).
 - Reviewer: @ifthenelse approves all changes; CODEOWNERS requires their review on every path, and on
   `.github/` and `docs/security/` specifically.
 - Single-maintainer repository: self-review follows the PR requirements above (verify green, tests
-  updated, docs/ADR updated) plus a 24h cooling-off before merging anything touching `src/secrets.ts`,
-  `src/session-store.ts`, `src/api.ts`, or `.github/workflows/`.
+  updated, docs/ADR updated) plus a 24h cooling-off before merging anything touching `src/secrets.rs`,
+  `src/session_store.rs`, `src/api.rs`, or `.github/workflows/`.
 
 ## Escalation
 Security concerns: see [SECURITY.md](SECURITY.md). Blocked reviews or anything else: open a GitHub

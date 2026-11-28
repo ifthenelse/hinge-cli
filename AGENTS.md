@@ -6,10 +6,11 @@
 - Purpose and non-goals: `intent.md`. Architecture: `docs/architecture.md`. Decisions: `docs/adr/`.
 
 ## Stack
-- Language-neutral repository; see README.md.
+- Rust (edition 2024, Cargo). Single binary `hinge`; modules in `src/`, unit tests inline (`#[cfg(test)]`).
 
 ## Commands
-- Verify everything: `scripts/verify`
+- Verify everything: `scripts/verify` (`cargo fmt --check`, `cargo clippy -D warnings`, `cargo test`)
+- Build: `cargo build --release`
 
 ## Verification
 - Run `scripts/verify` before handing work back; it must pass. CI runs the same command and is the authoritative gate.
@@ -17,7 +18,7 @@
 
 ## Constraints
 - Commit messages follow Conventional Commits (see `.gitmessage.txt`). Keep changes small and focused.
-- Do not reformat unrelated code. Do not edit generated files, lockfiles by hand, or the single version source.
+- Do not reformat unrelated code. Do not edit generated files or `Cargo.lock` by hand; the version lives only in `Cargo.toml`.
 - Never commit secrets or `.env` files. `.env.example` holds names and safe placeholders only.
 
 ## Approval boundaries
