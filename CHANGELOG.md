@@ -5,6 +5,10 @@ rather than editing several version sources by hand. Format: [Keep a Changelog](
 
 ## [Unreleased]
 
+## [0.2.3] - 2026-11-28
+### Added
+- `.github/assets/social-preview.svg` (+ rendered `.png`, 1280×640): link-preview card for Show HN/Reddit/social shares. Not wired up automatically — GitHub's repository social-preview image has no API, so it needs uploading once at Settings → General → Social preview.
+
 ## [0.2.2] - 2026-11-28
 ### Added
 - `.github/workflows/release.yml`: on-demand (manual-dispatch only) GitHub Release, building `hinge`
