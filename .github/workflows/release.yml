@@ -1,0 +1,85 @@
+# On-demand release: build the `hinge` binary for Linux/macOS/Windows and publish them on a GitHub
+# Release tagged from Cargo.toml's version (the single version source; see CONTRIBUTING.md). Nothing
+# runs automatically — trigger it from the Actions tab (or `gh workflow run release.yml`) once a PR
+# with the version bump you want to ship is on `main`.
+name: Release
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+      tag: ${{ steps.v.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: v
+        run: |
+          v="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -n1)"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "tag=v$v" >> "$GITHUB_OUTPUT"
+      - name: fail if this version was already released
+        run: |
+          if gh release view "v${{ steps.v.outputs.version }}" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "::error::v${{ steps.v.outputs.version }} already has a release. Bump Cargo.toml's version first." >&2
+            exit 1
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  build:
+    needs: version
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            archive: tar.gz
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            archive: tar.gz
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            archive: tar.gz
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            archive: zip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - run: rustup target add ${{ matrix.target }}
+      - run: cargo build --release --locked --target ${{ matrix.target }}
+      - name: package (unix)
+        if: matrix.archive == 'tar.gz'
+        run: |
+          cd target/${{ matrix.target }}/release
+          tar czf "$GITHUB_WORKSPACE/hinge-${{ needs.version.outputs.tag }}-${{ matrix.target }}.tar.gz" hinge
+      - name: package (windows)
+        if: matrix.archive == 'zip'
+        shell: pwsh
+        run: Compress-Archive -Path "target/${{ matrix.target }}/release/hinge.exe" -DestinationPath "hinge-${{ needs.version.outputs.tag }}-${{ matrix.target }}.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hinge-${{ matrix.target }}
+          path: hinge-*.${{ matrix.archive }}
+          if-no-files-found: error
+
+  release:
+    needs: [version, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v5
+        with:
+          path: dist
+          merge-multiple: true
+      - name: extract this version's changelog section
+        run: |
+          awk '/^## \['"${{ needs.version.outputs.version }}"'\]/{f=1;next} /^## \[/{f=0} f' CHANGELOG.md > release-notes.md
+          [ -s release-notes.md ] || echo "See CHANGELOG.md." > release-notes.md
+      - run: gh release create "${{ needs.version.outputs.tag }}" dist/*.tar.gz dist/*.zip --title "${{ needs.version.outputs.tag }}" --notes-file release-notes.md --repo "$GITHUB_REPOSITORY"
+        env:
+          GH_TOKEN: ${{ github.token }}
