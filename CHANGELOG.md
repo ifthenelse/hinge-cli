@@ -8,7 +8,6 @@ rather than editing several version sources by hand. Format: [Keep a Changelog](
 ## [0.2.3] - 2026-11-28
 ### Added
 - `.github/assets/social-preview.svg` (+ rendered `.png`, 1280×640): link-preview card for Show HN/Reddit/social shares. Not wired up automatically — GitHub's repository social-preview image has no API, so it needs uploading once at Settings → General → Social preview.
-- `launches/oss-launch-plan.md` and `launches/oss-showcase-audit.md`: launch readiness verdict (go with reduced scope — pending the first tagged release) and a showcase gap list from this session's `/oss-launch` and `/oss-showcase` runs.
 
 ## [0.2.2] - 2026-11-28
 ### Added
