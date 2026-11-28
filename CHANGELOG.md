@@ -5,6 +5,13 @@ rather than editing several version sources by hand. Format: [Keep a Changelog](
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-11-28
+### Added
+- `hinge auth capture`: runs the session-capture steps for you (starts the local proxy, prints what
+  to do on the phone, waits, imports, cleans up) instead of requiring mitmproxy to be run by hand.
+  `hinge auth import <file>` is unchanged and still works for anyone who prefers the manual steps or
+  needs to script the capture themselves.
+
 ## [0.2.0] - 2026-11-28
 ### Changed
 - **Rewritten in Rust** (edition 2024; clap, tokio, reqwest with rustls, serde). All commands and
