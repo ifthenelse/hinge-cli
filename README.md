@@ -48,7 +48,7 @@ Then capture a session from your own device ([docs/auth.md](docs/auth.md)), impo
 your account:
 
 ```sh
-hinge auth import <captured-session-file>
+hinge auth capture   # walks you through it on your phone, no separate tools to run by hand
 hinge auth status
 hinge tier
 hinge limits

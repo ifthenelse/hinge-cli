@@ -1,5 +1,6 @@
 mod api;
 mod appium;
+mod capture;
 mod secrets;
 mod session_store;
 
@@ -58,6 +59,8 @@ enum AuthCmd {
         #[arg(long)]
         keep: bool,
     },
+    /// walk you through capturing a session from your own phone (no separate tools to run by hand)
+    Capture,
     /// check that the saved session works
     Status,
     /// delete the saved session
@@ -166,6 +169,16 @@ async fn run(cli: Cli) -> Result<()> {
             )
             .await?;
             out(j, &json!({ "ok": true }), "session OK".into())
+        }
+        Cmd::Auth {
+            cmd: AuthCmd::Capture,
+        } => {
+            let path = capture::run()?;
+            out(
+                j,
+                &json!({ "ok": true }),
+                format!("session saved to {}", path.display()),
+            )
         }
         Cmd::Auth {
             cmd: AuthCmd::Logout,
