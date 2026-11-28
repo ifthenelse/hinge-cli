@@ -52,15 +52,19 @@ jobs:
       - uses: actions/checkout@v7
       - run: rustup target add ${{ matrix.target }}
       - run: cargo build --release --locked --target ${{ matrix.target }}
+      - name: smoke test the binary
+        if: matrix.target != 'x86_64-apple-darwin' # Intel build is cross-compiled on an arm64 runner
+        run: bash scripts/smoke target/${{ matrix.target }}/release/hinge
+        shell: bash
       - name: package (unix)
         if: matrix.archive == 'tar.gz'
         run: |
           cd target/${{ matrix.target }}/release
-          tar czf "$GITHUB_WORKSPACE/hinge-${{ needs.version.outputs.tag }}-${{ matrix.target }}.tar.gz" hinge
+          tar czf "$GITHUB_WORKSPACE/hinge-${{ matrix.target }}.tar.gz" hinge
       - name: package (windows)
         if: matrix.archive == 'zip'
         shell: pwsh
-        run: Compress-Archive -Path "target/${{ matrix.target }}/release/hinge.exe" -DestinationPath "hinge-${{ needs.version.outputs.tag }}-${{ matrix.target }}.zip"
+        run: Compress-Archive -Path "target/${{ matrix.target }}/release/hinge.exe" -DestinationPath "hinge-${{ matrix.target }}.zip"
       - uses: actions/upload-artifact@v4
         with:
           name: hinge-${{ matrix.target }}

@@ -5,6 +5,18 @@ rather than editing several version sources by hand. Format: [Keep a Changelog](
 
 ## [Unreleased]
 
+## [0.2.5] - 2026-11-28
+### Added
+- CI `smoke` job: builds the release binary and smoke-tests it (`scripts/smoke`: version, help, offline
+  auth import/logout, secret env://) on Ubuntu, macOS and Windows. The Release workflow runs the same
+  smoke test on each binary it ships (except the cross-compiled Intel macOS one).
+- README and GitHub Pages: latest-version download links for the three OSes, alternative install
+  routes (`cargo install --git`, from source), and software and hardware requirements.
+### Changed
+- Release assets now have version-less names (`hinge-<target>.tar.gz|zip`) so
+  `releases/latest/download/...` links stay stable. Links work from the next release on; v0.2.2 keeps
+  its versioned names.
+
 ## [0.2.4] - 2026-11-28
 ### Fixed
 - GitHub Pages landing page still showed the old Node.js install (`npm install`, `hinge auth import`). It
