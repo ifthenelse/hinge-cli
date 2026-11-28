@@ -1,6 +1,6 @@
 {
   "name": "hinge-cli",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Command-line client for your own Hinge account, built on its reverse-engineered HTTP API.",
   "type": "module",
   "license": "MIT",
