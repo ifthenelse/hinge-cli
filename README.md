@@ -9,6 +9,7 @@ automating a swipe.
 
 [![CI](https://github.com/ifthenelse/hinge-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/ifthenelse/hinge-cli/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/github/license/ifthenelse/hinge-cli)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/ifthenelse/hinge-cli?sort=semver)](https://github.com/ifthenelse/hinge-cli/releases)
 
 It talks directly to Hinge's real HTTP API (reverse-engineered from captured app traffic, not UI
 automation at runtime) using a session you capture from your own phone, and reports things the app
@@ -101,3 +102,5 @@ in the name only to say which service the tool works with.
 ## License
 
 [MIT](LICENSE)
+
+[ifthenelse.github.io/hinge-cli](https://ifthenelse.github.io/hinge-cli/) — the project's GitHub Pages site.
