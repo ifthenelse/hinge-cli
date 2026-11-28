@@ -24,7 +24,7 @@ Wait
 Type 'BIN="$(mktemp -d)"'
 Enter
 Wait
-Type `printf '#!/bin/sh\nexec node "%s/dist/cli.js" "$@"\n' "$REPO_ROOT" > "$BIN/hinge"`
+Type `printf '#!/bin/sh\nexec "%s/target/release/hinge" "$@"\n' "$REPO_ROOT" > "$BIN/hinge"`
 Enter
 Wait
 Type 'chmod +x "$BIN/hinge"'
