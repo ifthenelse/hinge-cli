@@ -5,6 +5,22 @@ rather than editing several version sources by hand. Format: [Keep a Changelog](
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-28
+### Changed
+- **Rewritten in Rust** (edition 2024; clap, tokio, reqwest with rustls, serde). All commands and
+  output formats are preserved: `doctor`, `tier`, `limits`, `auth import|status|logout`, `inspect`,
+  `secret`, the global `--json` flag, `HINGE_*` environment variables and the `op://`, `bw://`,
+  `keychain://`, `cmd://`, `env://` secret references. Appium is now spoken over the W3C WebDriver HTTP
+  protocol directly. Build with `cargo build --release` (binary `target/release/hinge`); Node.js is no
+  longer needed.
+- Every HTTP request now sends the user agent of a generic Android phone. The session's own
+  `user-agent` is no longer stored (`hinge_token.py` and `auth import` drop it).
+- CI, the Security workflow (`cargo audit`, CodeQL for Rust), Dependabot (cargo), `CONTRIBUTING.md`, the
+  README, `AGENTS.md` and `docs/` updated for the Rust toolchain; the demo GIF was re-recorded.
+- The version source is now `Cargo.toml` (was `package.json`).
+### Removed
+- The TypeScript sources, `package.json`, `package-lock.json`, `tsconfig*.json` and `.node-version`.
+
 ## [0.1.6] - 2026-11-28
 ### Added
 - `docs/index.html`: single-file landing page for GitHub Pages with an animated ASCII background

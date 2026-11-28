@@ -1,0 +1,24 @@
+[package]
+name = "hinge-cli"
+version = "0.2.0"
+edition = "2024"
+description = "Command-line client for your own Hinge account, built on its reverse-engineered HTTP API."
+license = "MIT"
+repository = "https://github.com/ifthenelse/hinge-cli"
+rust-version = "1.85"
+
+[[bin]]
+name = "hinge"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.105"
+clap = { version = "4.6.10", features = ["derive"] }
+reqwest = { version = "0.13.5", default-features = false, features = ["json", "rustls"] }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = { version = "1.0.154", features = ["preserve_order"] }
+tokio = { version = "1.54.1", features = ["rt-multi-thread", "macros"] }
+uuid = { version = "1.26.1", features = ["v4"] }
+
+[dev-dependencies]
+tokio = { version = "1.54.1", features = ["net", "io-util"] }
