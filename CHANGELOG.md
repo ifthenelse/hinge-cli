@@ -5,6 +5,11 @@ rather than editing several version sources by hand. Format: [Keep a Changelog](
 
 ## [Unreleased]
 
+## [0.2.4] - 2026-11-28
+### Fixed
+- GitHub Pages landing page still showed the old Node.js install (`npm install`, `hinge auth import`). It
+  now shows prebuilt binaries from Releases, the Rust build from source, and `hinge auth capture`.
+
 ## [0.2.2] - 2026-11-28
 ### Added
 - `.github/workflows/release.yml`: on-demand (manual-dispatch only) GitHub Release, building `hinge`

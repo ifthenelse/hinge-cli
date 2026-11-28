@@ -1,6 +1,6 @@
 [package]
 name = "hinge-cli"
-version = "0.2.2"
+version = "0.2.4"
 edition = "2024"
 description = "Command-line client for your own Hinge account, built on its reverse-engineered HTTP API."
 license = "MIT"
