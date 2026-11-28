@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Smoke test for a built `hinge` binary, identical on Linux, macOS and Windows (Git Bash).
+# Offline only: nothing here talks to Hinge. Usage: scripts/smoke [path-to-binary]
+set -euo pipefail
+cd "$(dirname "$0")/.."
+bin="${1:-target/release/hinge}"
+[ -f "$bin" ] || bin="$bin.exe"
+[ -f "$bin" ] || { echo "smoke: binary not found: $1" >&2; exit 1; }
+
+tmp="$(mktemp -d)"
+command -v cygpath >/dev/null 2>&1 && tmp="$(cygpath -m "$tmp")" # native path for the Windows binary
+export HINGE_SESSION_FILE="$tmp/session.json"
+unset HINGE_SESSION_REF
+fail() { echo "smoke FAILED: $*" >&2; exit 1; }
+
+want="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -n1)"
+[ "$("$bin" --version)" = "hinge $want" ] || fail "--version is not 'hinge $want'"
+"$bin" --help | grep -q "tier" || fail "--help does not list commands"
+
+err="$("$bin" auth status 2>&1)" && fail "auth status succeeded without a session"
+echo "$err" | grep -q "Not signed in" || fail "auth status gave the wrong error: $err"
+
+printf '{"headers":{"authorization":"Bearer SMOKE","user-agent":"x"}}' > "$tmp/in.json"
+"$bin" auth import "$tmp/in.json" >/dev/null
+[ -f "$HINGE_SESSION_FILE" ] || fail "auth import did not save the session"
+[ ! -e "$tmp/in.json" ] || fail "auth import did not delete the source file"
+grep -q "user-agent" "$HINGE_SESSION_FILE" && fail "session kept the user-agent header"
+"$bin" auth logout >/dev/null
+[ ! -e "$HINGE_SESSION_FILE" ] || fail "auth logout left the session behind"
+
+[ "$(SMOKE_SECRET=abc "$bin" --json secret env://SMOKE_SECRET)" = '{"ok":true,"length":3}' ] || fail "secret env:// output changed"
+rm -rf "$tmp"
+echo "smoke OK ($bin, $want)"

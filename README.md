@@ -34,9 +34,28 @@ non-goals (no bots, no bulk actions, no multi-account) live in [intent.md](inten
   auto-swipe, no bulk messaging, no multi-account support, and none planned (see
   [intent.md](intent.md#non-goals)).
 
-## Quickstart
+## Install
 
-Requires a Rust toolchain (1.85 or newer; install from [rustup.rs](https://rustup.rs)).
+### Download the latest version
+
+| OS | Download |
+| --- | --- |
+| Windows (x86_64) | [hinge-x86_64-pc-windows-msvc.zip](https://github.com/ifthenelse/hinge-cli/releases/latest/download/hinge-x86_64-pc-windows-msvc.zip) |
+| macOS, Apple silicon | [hinge-aarch64-apple-darwin.tar.gz](https://github.com/ifthenelse/hinge-cli/releases/latest/download/hinge-aarch64-apple-darwin.tar.gz) |
+| macOS, Intel | [hinge-x86_64-apple-darwin.tar.gz](https://github.com/ifthenelse/hinge-cli/releases/latest/download/hinge-x86_64-apple-darwin.tar.gz) |
+| Linux (x86_64) | [hinge-x86_64-unknown-linux-gnu.tar.gz](https://github.com/ifthenelse/hinge-cli/releases/latest/download/hinge-x86_64-unknown-linux-gnu.tar.gz) |
+
+Unpack it and put `hinge` (`hinge.exe` on Windows) somewhere on your `PATH`. The macOS and Windows
+binaries are unsigned, so your OS may ask you to confirm the first run. All versions and release
+notes: [Releases](https://github.com/ifthenelse/hinge-cli/releases).
+
+### Other ways to install
+
+With [Rust](https://rustup.rs) installed (see requirements below):
+
+```sh
+cargo install --git https://github.com/ifthenelse/hinge-cli     # latest main, no clone needed
+```
 
 ```sh
 git clone https://github.com/ifthenelse/hinge-cli.git
@@ -44,6 +63,30 @@ cd hinge-cli
 cargo build --release   # binary: target/release/hinge
 cargo install --path .  # optional: puts `hinge` on your PATH
 ```
+
+Use the source routes for platforms without a prebuilt binary (Linux or Windows on ARM, older Linux
+distributions). The project is not published on crates.io.
+
+### Requirements
+
+**Software**
+- Windows 10 or newer, macOS 11 or newer, or Linux with a recent glibc (the Linux binary is built on
+  Ubuntu 24.04; on older distributions build from source).
+- Windows only: the [Microsoft Visual C++ Redistributable](https://learn.microsoft.com/cpp/windows/latest-supported-vs-redistributable-packages)
+  (already present on most systems).
+- Building from source: [Rust](https://rustup.rs) 1.85 or newer, plus a C linker: Xcode Command Line
+  Tools (macOS), `build-essential` (Linux) or [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (Windows).
+- `hinge auth capture` only: [mitmproxy](https://mitmproxy.org) on the computer, and your phone with
+  the Hinge app on the same Wi-Fi network.
+- `hinge doctor` and `hinge inspect` (optional developer commands only): an [Appium](https://appium.io) server.
+- Internet access to `prod-api.hingeaws.net` over HTTPS.
+
+**Hardware**
+- A 64-bit Intel/AMD computer (Windows, Linux) or an Apple silicon or Intel Mac. No other hardware
+  is needed to run it; your phone is only used once, for `hinge auth capture`.
+- A few MB of disk for the binary (about 3 MB packed). Memory and CPU use are minimal; not benchmarked.
+
+## Quickstart
 
 Then capture a session from your own device ([docs/auth.md](docs/auth.md)), import it, and check
 your account:
