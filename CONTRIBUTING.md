@@ -36,6 +36,15 @@ fake `$HOME`, so it never touches a real session or calls the live Hinge API).
   updated, docs/ADR updated) plus a 24h cooling-off before merging anything touching `src/secrets.rs`,
   `src/session_store.rs`, `src/api.rs`, or `.github/workflows/`.
 
+## Releases
+Two on-demand GitHub Actions workflows, both triggered manually (Actions tab or `gh workflow run
+<file>`) — nothing runs on every push:
+- **`release.yml`** — builds `hinge` for Linux, macOS (x86_64 + arm64) and Windows, tags
+  `v<Cargo.toml version>`, and publishes a GitHub Release with the binaries and that version's
+  `CHANGELOG.md` section as the notes. Bump `Cargo.toml`'s version first; it refuses to re-release an
+  existing tag.
+- **`pages.yml`** — publishes `docs/index.html` (the GitHub Pages site) as-is.
+
 ## Escalation
 Security concerns: see [SECURITY.md](SECURITY.md). Blocked reviews or anything else: open a GitHub
 issue — there is no other channel for this single-maintainer project.

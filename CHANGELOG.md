@@ -5,6 +5,17 @@ rather than editing several version sources by hand. Format: [Keep a Changelog](
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-11-28
+### Added
+- `.github/workflows/release.yml`: on-demand (manual-dispatch only) GitHub Release, building `hinge`
+  for Linux, macOS (x86_64 + arm64) and Windows and tagging `v<version>`.
+- `.github/workflows/pages.yml`: on-demand (manual-dispatch only) GitHub Pages deploy of `docs/`.
+- GitHub Pages enabled (Actions build) at https://ifthenelse.github.io/hinge-cli/; linked from the
+  README and set as the repository homepage. Repository topics added.
+### Changed
+- Branch protection on `main` now requires all four CI checks (`verify`, `codeql`, `secret-scan`,
+  `dependency-audit`), not just `verify`.
+
 ## [0.2.1] - 2026-11-28
 ### Added
 - `hinge auth capture`: runs the session-capture steps for you (starts the local proxy, prints what
