@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hinge-cli</title>
+<meta name="description" content="An unofficial, read-only command-line client for your own Hinge account. Plain, disclosed, scoped.">
+<style>
+  :root { --bg:#fff; --fg:#111; --muted:#6b7280; --pink:#ec4899; --card:rgba(255,255,255,.86); --line:#e5e7eb; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0b0b0d; --fg:#f5f5f5; --muted:#9ca3af; --card:rgba(11,11,13,.82); --line:#26262b; } }
+  * { box-sizing: border-box; }
+  html, body { margin:0; background:var(--bg); color:var(--fg); }
+  body { font: 16px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  #bg { position:fixed; inset:0; width:100%; height:100%; z-index:0; }
+  main { position:relative; z-index:1; max-width:44rem; margin:0 auto; padding:4rem 16px 3rem; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:1.25rem 1.5rem; margin:1.5rem 0; backdrop-filter:blur(3px); }
+  h1 { display:flex; align-items:center; gap:.6rem; font-size:2.4rem; margin:0 0 .5rem; }
+  h1 svg { width:2.4rem; height:2.4rem; }
+  h2 { font-size:1rem; margin:0 0 .5rem; color:var(--pink); }
+  p { margin:.4rem 0; } .muted { color:var(--muted); font-size:.9rem; }
+  pre { margin:.5rem 0; padding:.75rem 1rem; overflow-x:auto; border:1px solid var(--line); border-radius:6px; }
+  a { color:var(--pink); }
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<main>
+  <h1>
+    <svg viewBox="0 0 256 256" role="img" aria-label="hinge-cli logo"><g transform="translate(116 102) scale(0.72) rotate(-90) translate(-128 -144)"><path d="M128 226 C48 160 28 118 28 80 A50 50 0 0 1 128 62 A50 50 0 0 1 228 80 C228 118 208 160 128 226 Z" fill="#ec4899"/></g><rect x="28" y="205" width="146" height="20" fill="#ec4899"/></svg>
+    hinge-cli
+  </h1>
+  <p>An unofficial, read-only command-line client for your own Hinge account. Plain, disclosed, scoped.</p>
+
+  <div class="card">
+    <h2>Quickstart</h2>
+    <pre>git clone https://github.com/ifthenelse/hinge-cli.git
+cd hinge-cli &amp;&amp; npm install &amp;&amp; npm run build
+hinge auth import &lt;captured-session-file&gt;
+hinge tier</pre>
+    <p class="muted">Needs Node.js 22.18 or newer. Capturing a session: <a href="https://github.com/ifthenelse/hinge-cli/blob/main/docs/auth.md">docs/auth.md</a>.</p>
+  </div>
+
+  <div class="card">
+    <h2>Read this first</h2>
+    <p>Using this almost certainly violates Hinge's Terms of Service and can get your account restricted or banned. It never automates a swipe: every action is one explicit command for your own account.</p>
+    <p class="muted">Hinge is a trademark of Hinge, Inc. This project is independent and not affiliated with or endorsed by Hinge, Inc. or Match Group.</p>
+  </div>
+
+  <p><a href="https://github.com/ifthenelse/hinge-cli">GitHub</a> · <a href="https://github.com/ifthenelse/hinge-cli/blob/main/docs/architecture.md">Architecture</a> · <a href="https://github.com/ifthenelse/hinge-cli/blob/main/LICENSE">MIT License</a></p>
+</main>
+
+<script>
+// ASCII background: things Hinge users know. Drawn on a canvas, never touches the text layer.
+const SPRITES = {
+  heart: [" _  _ ", "( \\/ )", " \\  / ", "  \\/  "],
+  rose:  ["  _  ", " (@) ", "  |/ ", " \\|  ", "  |  "],
+  card:  ["+-------+", "| (^_^) |", "|  >>>  |", "+-------+"],
+  chat:  ["(hi! )", " \\/   "],
+  hinge: ["|=|", "|o|", "|=|"],
+  tilde: ["<3"],
+};
+const KINDS = Object.keys(SPRITES);
+const cv = document.getElementById("bg"), cx = cv.getContext("2d");
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const FONT = 14, LH = 16;
+let W, H, items = [];
+
+const rnd = (a, b) => a + Math.random() * (b - a);
+const spawn = (anywhere) => {
+  const kind = KINDS[(Math.random() * KINDS.length) | 0];
+  const sway = kind === "card";   // swipe cards slide sideways, the rest float up
+  const dir = Math.random() < .5 ? -1 : 1;
+  return { kind, x: sway && !anywhere ? (dir > 0 ? -100 : W + 100) : rnd(0, W), y: anywhere || sway ? rnd(0, H) : H + 60, vy: sway ? 0 : -rnd(.2, .7),
+           vx: sway ? dir * rnd(.4, 1) : 0, ph: rnd(0, 6.28), a: rnd(.12, .3) };
+};
+function resize() {
+  const d = devicePixelRatio || 1;
+  W = innerWidth; H = innerHeight;
+  cv.width = W * d; cv.height = H * d;
+  cx.setTransform(d, 0, 0, d, 0, 0);
+  const n = Math.max(8, Math.round(W * H / 40000));
+  items = Array.from({ length: n }, () => spawn(true));
+}
+function frame(t) {
+  cx.clearRect(0, 0, W, H);
+  cx.font = FONT + "px ui-monospace, Menlo, Consolas, monospace";
+  cx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--pink");
+  items.forEach((s, i) => {
+    s.y += s.vy; s.x += s.vx + Math.sin(t / 1500 + s.ph) * .3;
+    if (s.y < -80 || s.x < -120 || s.x > W + 120) items[i] = s = spawn(false);
+    cx.globalAlpha = s.a;
+    SPRITES[s.kind].forEach((row, r) => cx.fillText(row, s.x, s.y + r * LH));
+  });
+  if (!reduced) requestAnimationFrame(frame);
+}
+addEventListener("resize", () => { resize(); if (reduced) frame(0); });
+resize();
+frame(0);
+</script>
+</body>
+</html>

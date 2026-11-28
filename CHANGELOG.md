@@ -5,6 +5,12 @@ rather than editing several version sources by hand. Format: [Keep a Changelog](
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-11-28
+### Added
+- `docs/index.html`: single-file landing page for GitHub Pages with an animated ASCII background
+  (hearts, roses, swipe cards, chat bubbles, hinges) drawn on a canvas behind the content. Honours
+  light/dark and `prefers-reduced-motion` (static frame). `docs/.nojekyll` serves it as-is.
+
 ## [0.1.5] - 2026-11-28
 ### Changed
 - Logo: the `>_` prompt chevron is now a pink heart rotated 90° counter-clockwise (tip pointing right),
