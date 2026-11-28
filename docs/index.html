@@ -32,12 +32,21 @@
   <p>An unofficial, read-only command-line client for your own Hinge account. Plain, disclosed, scoped.</p>
 
   <div class="card">
-    <h2>Quickstart</h2>
+    <h2>Install</h2>
+    <p><a href="https://github.com/ifthenelse/hinge-cli/releases/latest">Download a prebuilt binary</a> for macOS (Apple silicon or Intel), Linux (x86_64) or Windows (x86_64), unpack it and put <code>hinge</code> on your PATH. The macOS and Windows binaries are unsigned, so your OS may ask you to confirm the first run.</p>
+    <p>Or build from source with <a href="https://rustup.rs">Rust</a> 1.85 or newer:</p>
     <pre>git clone https://github.com/ifthenelse/hinge-cli.git
-cd hinge-cli &amp;&amp; npm install &amp;&amp; npm run build
-hinge auth import &lt;captured-session-file&gt;
-hinge tier</pre>
-    <p class="muted">Needs Node.js 22.18 or newer. Capturing a session: <a href="https://github.com/ifthenelse/hinge-cli/blob/main/docs/auth.md">docs/auth.md</a>.</p>
+cd hinge-cli
+cargo install --path .</pre>
+  </div>
+
+  <div class="card">
+    <h2>Quickstart</h2>
+    <pre>hinge auth capture   # guided, one-time
+hinge auth status
+hinge tier
+hinge limits</pre>
+    <p class="muted">Capturing a session needs <a href="https://mitmproxy.org">mitmproxy</a> installed and a phone on the same Wi-Fi. Step by step: <a href="https://github.com/ifthenelse/hinge-cli/blob/main/docs/auth.md">docs/auth.md</a>.</p>
   </div>
 
   <div class="card">
