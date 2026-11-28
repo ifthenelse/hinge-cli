@@ -5,6 +5,14 @@ rather than editing several version sources by hand. Format: [Keep a Changelog](
 
 ## [Unreleased]
 
+## [0.1.5] - 2026-11-28
+### Changed
+- Logo: the `>_` prompt chevron is now a pink heart rotated 90° counter-clockwise (tip pointing right),
+  keeping the underscore; symbol and light/dark banner SVGs updated.
+### Added
+- README "Trademarks and affiliation" section: Hinge is a trademark of Hinge, Inc.; the project is
+  unaffiliated and claims no rights in their marks.
+
 ## [0.1.4] - 2026-11-27
 ### Changed
 - `.gitignore` now ignores `.claude/`, `.codex/` and `launches/` (local agent tooling and launch-pipeline
